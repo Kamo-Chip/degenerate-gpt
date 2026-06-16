@@ -1,0 +1,17 @@
+{
+  "name": "@degenerate-gpt/jobs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@trigger.dev/sdk": "^4.4.6",
+    "@degenerate-gpt/agents": "workspace:*",
+    "@degenerate-gpt/db": "workspace:*",
+    "@degenerate-gpt/shared": "workspace:*",
+    "@degenerate-gpt/sources": "workspace:*"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.7",
+    "trigger.dev": "^4.4.6"
+  }
+}

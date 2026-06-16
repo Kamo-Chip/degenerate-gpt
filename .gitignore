@@ -1,0 +1,23 @@
+node_modules/
+dist/
+build/
+.turbo/
+.next/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# trigger.dev
+.trigger/
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# os / editor
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,16 @@
+{
+  "name": "@degenerate-gpt/agents",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^3.0.71",
+    "@degenerate-gpt/shared": "workspace:*",
+    "@degenerate-gpt/sources": "workspace:*",
+    "ai": "^6.0.206",
+    "zod": "^4.4.3"
+  }
+}

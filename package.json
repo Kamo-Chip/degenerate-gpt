@@ -1,0 +1,29 @@
+{
+  "name": "degenerate-gpt",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json && pnpm --filter @degenerate-gpt/web typecheck",
+    "dev:web": "pnpm --filter @degenerate-gpt/web dev",
+    "db:push": "pnpm --filter @degenerate-gpt/db db:push",
+    "db:seed": "pnpm --filter @degenerate-gpt/db db:seed",
+    "db:report": "pnpm --filter @degenerate-gpt/db db:report"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.22.4",
+    "typescript": "^5.7.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@depot/cli",
+      "esbuild",
+      "protobufjs"
+    ]
+  }
+}

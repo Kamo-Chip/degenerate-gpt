@@ -26,7 +26,6 @@ export const discoverMatches = schemaTask({
         teamAExternalId: f.teamAExternalId,
         teamBExternalId: f.teamBExternalId,
         kickoffTime: f.kickoffTime ? new Date(f.kickoffTime) : null,
-        status: f.status,
       }));
 
     const saved = await upsertMatches(rows);

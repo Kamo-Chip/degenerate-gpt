@@ -14,17 +14,19 @@ import {
 function formatKickoff(date: Date | null): string {
   if (!date) return "TBD";
   return new Intl.DateTimeFormat("en-GB", {
-    dateStyle: "medium",
-    timeStyle: "short",
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
     timeZone: "UTC",
   }).format(date);
 }
 
 function predictionBadge(status: string) {
   if (status === "complete") {
-    return <Badge variant="success">analyzed</Badge>;
+    return <Badge variant="success">✅ analyzed</Badge>;
   }
-  return <Badge variant="secondary">not analyzed</Badge>;
+  return <Badge variant="secondary">⚪ not analyzed</Badge>;
 }
 
 export function MatchList({ matches }: { matches: MatchListItem[] }) {
@@ -43,7 +45,6 @@ export function MatchList({ matches }: { matches: MatchListItem[] }) {
         <TableRow>
           <TableHead>Match</TableHead>
           <TableHead>Kickoff (UTC)</TableHead>
-          <TableHead>Status</TableHead>
           <TableHead>Prediction</TableHead>
         </TableRow>
       </TableHeader>
@@ -60,9 +61,6 @@ export function MatchList({ matches }: { matches: MatchListItem[] }) {
             </TableCell>
             <TableCell className="text-muted-foreground">
               {formatKickoff(match.kickoffTime)}
-            </TableCell>
-            <TableCell>
-              <Badge variant="outline">{match.status}</Badge>
             </TableCell>
             <TableCell>{predictionBadge(match.predictionStatus)}</TableCell>
           </TableRow>

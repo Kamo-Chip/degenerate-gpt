@@ -39,12 +39,11 @@ export interface UpsertMatchInput {
   teamAExternalId: string | null;
   teamBExternalId: string | null;
   kickoffTime: Date | null;
-  status: string;
 }
 
 /**
  * Insert discovered fixtures, updating existing rows (matched on `external_id`)
- * with refreshed teams/kickoff/status. Returns the affected match rows.
+ * with refreshed teams/kickoff. Returns the affected match rows.
  */
 export async function upsertMatches(
   rows: UpsertMatchInput[],
@@ -62,7 +61,6 @@ export async function upsertMatches(
         teamAExternalId: sql`excluded.team_a_external_id`,
         teamBExternalId: sql`excluded.team_b_external_id`,
         kickoffTime: sql`excluded.kickoff_time`,
-        status: sql`excluded.status`,
         updatedAt: new Date(),
       },
     })
@@ -121,7 +119,6 @@ export interface MatchListItem {
   teamA: string;
   teamB: string;
   kickoffTime: Date | null;
-  status: string;
   predictionStatus: string;
 }
 
@@ -133,7 +130,6 @@ export async function listMatches(): Promise<MatchListItem[]> {
       teamA: matches.teamA,
       teamB: matches.teamB,
       kickoffTime: matches.kickoffTime,
-      status: matches.status,
       predictionStatus: matches.predictionStatus,
     })
     .from(matches)

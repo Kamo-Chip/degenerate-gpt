@@ -1,6 +1,5 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -34,7 +33,9 @@ export function TriggerButton({
     <Button onClick={onClick} disabled={isPending} variant={variant} size={size}>
       {isPending ? (
         <>
-          <Loader2 className="animate-spin" />
+          <span aria-hidden className="inline-block animate-spin">
+            ⚽
+          </span>
           {pendingLabel}
         </>
       ) : (

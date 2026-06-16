@@ -14,16 +14,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body className="min-h-screen antialiased">
-        <header className="border-b">
+        <header className="border-b-4 border-foreground bg-background">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
             <Link href="/" className="flex items-baseline gap-2">
-              <span className="text-lg font-bold tracking-tight">
+              <span className="text-xl font-black tracking-tight">
+                <span aria-hidden className="mr-1">⚽</span>
                 degenerate<span className="text-primary">·gpt</span>
               </span>
-              <span className="hidden text-xs text-muted-foreground sm:inline">
-                World Cup 2026 prediction bot
+              <span className="hidden text-xs font-bold text-muted-foreground sm:inline">
+                FIFA World Cup '26 predictions 🏆
               </span>
             </Link>
           </div>

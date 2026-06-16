@@ -1,8 +1,7 @@
 import { listMatches } from "@degenerate-gpt/db";
-import { Sparkles } from "lucide-react";
 
 import { discoverMatchesAction } from "@/app/actions";
-import { MatchList } from "@/components/match-list";
+import { MatchListTabs } from "@/components/match-list-tabs";
 import { TriggerButton } from "@/components/trigger-button";
 
 // Always read fresh from the DB — matches/predictions change out of band.
@@ -24,12 +23,12 @@ export default async function DashboardPage() {
           action={discoverMatchesAction}
           pendingLabel="Discovering…"
         >
-          <Sparkles />
+          <span aria-hidden>🔍</span>
           Discover matches
         </TriggerButton>
       </div>
 
-      <MatchList matches={matches} />
+      <MatchListTabs matches={matches} />
     </div>
   );
 }

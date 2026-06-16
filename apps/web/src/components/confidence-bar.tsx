@@ -15,9 +15,9 @@ export function ConfidenceBar({
         <span>confidence</span>
         <span className="font-mono font-medium text-foreground">{pct}%</span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+      <div className="h-4 w-full overflow-hidden rounded-md border-2 border-foreground bg-background">
         <div
-          className="h-full rounded-full bg-primary transition-all"
+          className="h-full bg-primary transition-all"
           style={{ width: `${pct}%` }}
         />
       </div>

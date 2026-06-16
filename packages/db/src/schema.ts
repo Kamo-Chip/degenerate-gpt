@@ -21,7 +21,6 @@ export const matches = pgTable("matches", {
   teamAExternalId: text("team_a_external_id"),
   teamBExternalId: text("team_b_external_id"),
   kickoffTime: timestamp("kickoff_time", { withTimezone: true }),
-  status: text("status").notNull().default("upcoming"),
   predictionStatus: text("prediction_status").notNull().default("not_started"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()

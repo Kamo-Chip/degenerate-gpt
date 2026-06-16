@@ -13,6 +13,7 @@
     "@degenerate-gpt/db": "workspace:*",
     "@degenerate-gpt/shared": "workspace:*",
     "@radix-ui/react-slot": "^1.1.2",
+    "@trigger.dev/react-hooks": "^4.4.6",
     "@trigger.dev/sdk": "^4.4.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

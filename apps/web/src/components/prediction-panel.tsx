@@ -33,7 +33,7 @@ export function PredictionPanel({
   matchId: string;
 }) {
   return (
-    <Card className="border-primary/40">
+    <Card>
       <CardHeader>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <CardTitle className="flex items-center gap-2 text-lg">

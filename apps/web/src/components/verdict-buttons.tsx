@@ -1,7 +1,6 @@
 "use client";
 
 import type { Verdict } from "@degenerate-gpt/shared";
-import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { useTransition } from "react";
 
 import { markPredictionAction } from "@/app/actions";
@@ -46,7 +45,7 @@ export function VerdictButtons({
             "border-success bg-success/15 text-success hover:bg-success/25",
         )}
       >
-        <ThumbsUp />
+        <span aria-hidden>👍</span>
       </Button>
       <Button
         type="button"
@@ -61,7 +60,7 @@ export function VerdictButtons({
             "border-destructive bg-destructive/15 text-destructive hover:bg-destructive/25",
         )}
       >
-        <ThumbsDown />
+        <span aria-hidden>👎</span>
       </Button>
     </div>
   );

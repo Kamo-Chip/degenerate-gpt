@@ -20,7 +20,6 @@ async function main() {
         teamA: m.teamA,
         teamB: m.teamB,
         kickoffTime: new Date(now + m.kickoffHoursFromNow * 60 * 60 * 1000),
-        status: "upcoming",
         predictionStatus: "not_started",
       })),
     )

@@ -19,7 +19,6 @@ export interface Fixture {
   teamAExternalId: string | null;
   teamBExternalId: string | null;
   kickoffTime: string | null;
-  status: string;
   stage: string | null;
   group: string | null;
 }
@@ -53,28 +52,11 @@ interface FdTeam {
 interface FdMatch {
   id: number;
   utcDate: string;
-  status: string;
   stage?: string;
   group?: string | null;
   homeTeam: FdTeam;
   awayTeam: FdTeam;
   score?: { fullTime?: { home: number | null; away: number | null } };
-}
-
-/** Normalise football-data statuses into our match status vocabulary. */
-function mapStatus(s: string): string {
-  switch (s) {
-    case "SCHEDULED":
-    case "TIMED":
-      return "upcoming";
-    case "IN_PLAY":
-    case "PAUSED":
-      return "live";
-    case "FINISHED":
-      return "finished";
-    default:
-      return s.toLowerCase();
-  }
 }
 
 /** All fixtures for the competition, mapped to our match shape. */
@@ -91,7 +73,6 @@ export async function getWorldCupFixtures(competition = "WC"): Promise<Fixture[]
     teamAExternalId: m.homeTeam?.id != null ? String(m.homeTeam.id) : null,
     teamBExternalId: m.awayTeam?.id != null ? String(m.awayTeam.id) : null,
     kickoffTime: m.utcDate ?? null,
-    status: mapStatus(m.status),
     stage: m.stage ?? null,
     group: m.group ?? null,
   }));

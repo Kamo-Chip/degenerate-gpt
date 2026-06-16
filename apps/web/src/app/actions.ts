@@ -15,12 +15,15 @@ export async function discoverMatchesAction() {
   return { runId: handle.id };
 }
 
-/** Kick off analysis for one match, then refresh its detail page. */
+/**
+ * Kick off analysis for one match. Returns the run id plus a public access
+ * token scoped to that run so the client can subscribe with useRealtimeRun.
+ */
 export async function analyzeMatchAction(matchId: string) {
   const handle = await triggerAnalyzeMatch(matchId);
   revalidatePath(`/matches/${matchId}`);
   revalidatePath("/");
-  return { runId: handle.id };
+  return { runId: handle.id, accessToken: handle.publicAccessToken };
 }
 
 /**

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Toaster } from "@/components/ui/sonner";
 import { UserMenu } from "@/components/user-menu";
 import { getUser } from "@/lib/session";
 import "./globals.css";
@@ -25,7 +26,7 @@ export default async function RootLayout({
             <Link href="/" className="flex items-baseline gap-2">
               <span className="text-xl font-black tracking-tight">
                 <span aria-hidden className="mr-1">⚽</span>
-                degenerate<span className="text-primary">·gpt</span>
+                Degenerate<span className="text-primary">·GPT</span>
               </span>
               <span className="hidden text-xs font-bold text-muted-foreground sm:inline">
                 FIFA World Cup '26 predictions 🏆
@@ -35,6 +36,7 @@ export default async function RootLayout({
           </div>
         </header>
         <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );

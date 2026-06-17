@@ -32,7 +32,10 @@ export const auth = betterAuth({
         // Constructed here (not at module load) so a missing key doesn't throw
         // during `next build`'s page-data collection.
         const resend = new Resend(process.env.RESEND_API_KEY);
-        await resend.emails.send({
+        // Resend resolves with `{ data, error }` rather than throwing, so an
+        // unhandled `error` would silently swallow the failure. Throw it so
+        // Better Auth surfaces the failure to the caller.
+        const { error } = await resend.emails.send({
           from: FROM,
           to: email,
           subject: "Your DegenerateGPT sign-in link 🤩",
@@ -43,6 +46,9 @@ export const auth = betterAuth({
             </div>
           `,
         });
+        if (error) {
+          throw new Error(`Resend failed to send magic link: ${error.name} — ${error.message}`);
+        }
       },
     }),
   ],

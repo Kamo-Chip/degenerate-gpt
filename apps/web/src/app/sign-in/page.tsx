@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 
 import { signIn } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
@@ -15,17 +16,20 @@ export default function SignInPage() {
     e.preventDefault();
     setStatus("sending");
     const { error } = await signIn.magicLink({ email, callbackURL: "/" });
-    setStatus(error ? "error" : "sent");
+    if (error) {
+      setStatus("error");
+      toast.error("Couldn't send the magic link", {
+        description: error.message ?? "Something went wrong — please try again.",
+      });
+      return;
+    }
+    setStatus("sent");
   }
 
   return (
     <div className="mx-auto flex min-h-[60vh] max-w-md flex-col justify-center">
-      <h1 className="text-2xl font-black tracking-tight">
-        <span aria-hidden className="mr-1">⚽</span>
-        degenerate<span className="text-primary">·gpt</span>
-      </h1>
       <p className="mt-1 mb-6 text-sm text-muted-foreground">
-        Sign in to run the bots and track your calls. We'll email you a magic link.
+        Sign in to get <del>gambling</del> educated insights into the 2026 World Cup
       </p>
 
       {status === "sent" ? (
@@ -33,7 +37,7 @@ export default function SignInPage() {
           <p className="font-bold">📬 Check your email</p>
           <p className="mt-1 text-muted-foreground">
             We sent a sign-in link to <span className="font-medium">{email}</span>.
-            Open it on this device to continue.
+            Sometimes the email gets flagged as spam. No idea why that happens 🥸
           </p>
         </div>
       ) : (

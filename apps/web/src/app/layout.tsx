@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { UserMenu } from "@/components/user-menu";
+import { getUser } from "@/lib/session";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -8,11 +10,13 @@ export const metadata: Metadata = {
   description: "Three bots read the game. One bot makes the call.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const user = await getUser();
+
   return (
     <html lang="en">
       <body className="min-h-screen antialiased">
@@ -27,6 +31,7 @@ export default function RootLayout({
                 FIFA World Cup '26 predictions 🏆
               </span>
             </Link>
+            {user && <UserMenu email={user.email} />}
           </div>
         </header>
         <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>

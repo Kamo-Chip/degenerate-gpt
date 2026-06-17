@@ -1,20 +1,20 @@
-import { logger, schemaTask } from "@trigger.dev/sdk";
+import { logger, schedules } from "@trigger.dev/sdk";
 import { type UpsertMatchInput, upsertMatches } from "@degenerate-gpt/db";
-import { DiscoverMatchesPayloadSchema } from "@degenerate-gpt/shared";
 import { footballData } from "@degenerate-gpt/sources";
+
+const COMPETITION = "WC";
 
 /**
  * Fixture ingestion. Pulls real World Cup fixtures from football-data.org and
  * upserts them (matched on the provider fixture id) so each match has a real
- * `externalId` + team ids the source agents can resolve. Run this from the
- * dashboard before `analyze-match`; it can later be promoted to a scheduled
- * `check-upcoming-matches` task.
+ * `externalId` + team ids the source agents can resolve. Runs on a daily cron
+ * so the fixture list stays fresh without any manual trigger.
  */
-export const discoverMatches = schemaTask({
+export const discoverMatches = schedules.task({
   id: "discover-matches",
-  schema: DiscoverMatchesPayloadSchema,
-  run: async ({ competition }) => {
-    const fixtures = await footballData.getWorldCupFixtures(competition);
+  cron: "0 0 * * *", // daily at 06:00 UTC
+  run: async () => {
+    const fixtures = await footballData.getWorldCupFixtures(COMPETITION);
 
     // Skip fixtures whose teams aren't decided yet (e.g. "TBD" knockout slots).
     const rows: UpsertMatchInput[] = fixtures
@@ -32,14 +32,14 @@ export const discoverMatches = schemaTask({
 
     const upcoming = saved.slice(0, 20);
     logger.info("Discovered fixtures", {
-      competition,
+      competition: COMPETITION,
       fetched: fixtures.length,
       upserted: saved.length,
       sample: upcoming.map((m) => `${m.id} — ${m.teamA} vs ${m.teamB}`),
     });
 
     return {
-      competition,
+      competition: COMPETITION,
       fetched: fixtures.length,
       upserted: saved.length,
       matches: saved.map((m) => ({

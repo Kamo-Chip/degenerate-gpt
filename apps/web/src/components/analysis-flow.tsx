@@ -113,7 +113,7 @@ export function AnalysisFlow({
 
   return (
     <div className="overflow-x-auto rounded-xl border-2 border-foreground bg-card p-4 shadow-brutal">
-      <div className="flex min-w-max items-center gap-2">
+      <div className="flex min-w-max items-center gap-2 justify-center">
         {/* Match */}
         <Node emoji="⚽" label="Match" status={matchStatus} className="w-28" />
 

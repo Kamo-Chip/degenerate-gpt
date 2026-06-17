@@ -1,4 +1,4 @@
-import { tasks } from "@trigger.dev/sdk";
+import { auth, tasks } from "@trigger.dev/sdk";
 
 /**
  * Thin, typed wrappers around the Trigger.dev tasks defined in apps/jobs. We
@@ -10,10 +10,18 @@ import { tasks } from "@trigger.dev/sdk";
  * via next.config.ts).
  */
 
-export async function triggerDiscoverMatches(competition = "WC") {
-  return tasks.trigger("discover-matches", { competition });
+export async function triggerAnalyzeMatch(matchId: string, userId: string) {
+  return tasks.trigger("analyze-match", { matchId, userId });
 }
 
-export async function triggerAnalyzeMatch(matchId: string) {
-  return tasks.trigger("analyze-match", { matchId });
+/**
+ * Mint a fresh public access token scoped to read a single run, so the client
+ * can re-subscribe (useRealtimeRun) to an analysis that's still running after a
+ * navigation or refresh. The token from the original trigger() is short-lived.
+ */
+export async function createRunToken(runId: string) {
+  return auth.createPublicToken({
+    scopes: { read: { runs: runId } },
+    expirationTime: "1h",
+  });
 }

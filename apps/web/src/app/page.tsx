@@ -1,34 +1,21 @@
-import { listMatches } from "@degenerate-gpt/db";
+import { Suspense } from "react";
 
-import { discoverMatchesAction } from "@/app/actions";
-import { MatchListTabs } from "@/components/match-list-tabs";
-import { TriggerButton } from "@/components/trigger-button";
+import { DashboardBody } from "@/components/dashboard-body";
+import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 
-// Always read fresh from the DB — matches/predictions change out of band.
-export const dynamic = "force-dynamic";
-
-export default async function DashboardPage() {
-  const matches = await listMatches();
-
+export default function DashboardPage() {
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Matches</h1>
-          <p className="text-sm text-muted-foreground">
-            Discover fixtures, run the bots, see who they back.
-          </p>
-        </div>
-        <TriggerButton
-          action={discoverMatchesAction}
-          pendingLabel="Discovering…"
-        >
-          <span aria-hidden>🔍</span>
-          Discover matches
-        </TriggerButton>
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight">Matches</h1>
+        <p className="text-sm text-muted-foreground">
+          Run the bots on upcoming fixtures and see who they back.
+        </p>
       </div>
 
-      <MatchListTabs matches={matches} />
+      <Suspense fallback={<DashboardSkeleton />}>
+        <DashboardBody />
+      </Suspense>
     </div>
   );
 }

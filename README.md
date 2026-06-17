@@ -93,9 +93,29 @@ directly from server components and fires runs via the Trigger.dev SDK (needs
 `TRIGGER_SECRET_KEY` and `DATABASE_URL`, both read from the repo-root `.env`).
 
 ```bash
-pnpm db:push           # if you haven't: adds the prediction `verdict` column
+pnpm db:push           # creates the auth + analyses tables and the userId columns
 pnpm dev:web           # http://localhost:3000
 ```
+
+> **Heads up — `db:push` and existing data:** `agent_reports` / `predictions` gain a
+> NOT NULL `user_id`. If you already have rows from before accounts existed, truncate
+> them first (`TRUNCATE agent_reports, predictions;`) — they're regenerable by re-running
+> an analysis.
+
+### Accounts & limits
+
+The hosted app has **user accounts** (magic-link sign-in via [Better Auth](https://better-auth.com)
++ [Resend](https://resend.com)). Match fixtures are **shared**, but each user's analyses
+(agent reports, predictions, 👍/👎 verdicts) are **private** to them.
+
+Set these in the repo-root `.env`: `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`,
+`RESEND_API_KEY`, `EMAIL_FROM` (and optionally `NEXT_PUBLIC_REPO_URL`).
+
+Every prediction on the hosted instance runs on the **operator's** API keys
+(`OPENAI_API_KEY` / `FOOTBALL_DATA_API_KEY` / `TAVILY_API_KEY`), so each account is
+capped at **5 predictions**. After that, the UI prompts you to **clone this repo and run
+your own instance** with your own keys (the Setup section above) — no limit when you host
+it yourself.
 
 - **/** — lists matches with status + whether they've been analyzed; **Discover
   matches** triggers `discover-matches`.

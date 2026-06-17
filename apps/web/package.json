@@ -12,15 +12,19 @@
   "dependencies": {
     "@degenerate-gpt/db": "workspace:*",
     "@degenerate-gpt/shared": "workspace:*",
+    "@neondatabase/serverless": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.2",
     "@trigger.dev/react-hooks": "^4.4.6",
     "@trigger.dev/sdk": "^4.4.6",
+    "better-auth": "^1.2.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "drizzle-orm": "^0.45.2",
     "lucide-react": "^0.469.0",
     "next": "^15.5.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "resend": "^4.6.0",
     "tailwind-merge": "^3.0.0"
   },
   "devDependencies": {

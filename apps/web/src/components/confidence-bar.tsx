@@ -12,7 +12,7 @@ export function ConfidenceBar({
   return (
     <div className={cn("space-y-1", className)}>
       <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <span>confidence</span>
+        <span>Confidence</span>
         <span className="font-mono font-medium text-foreground">{pct}%</span>
       </div>
       <div className="h-4 w-full overflow-hidden rounded-md border-2 border-foreground bg-background">

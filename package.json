@@ -10,6 +10,9 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json && pnpm --filter @degenerate-gpt/web typecheck",
     "dev:web": "pnpm --filter @degenerate-gpt/web dev",
+    "dev:jobs": "pnpm --filter @degenerate-gpt/jobs dev",
+    "dev": "pnpm run \"/^dev:/\"",
+    "deploy:jobs": "pnpm --filter @degenerate-gpt/jobs deploy",
     "db:push": "pnpm --filter @degenerate-gpt/db db:push",
     "db:seed": "pnpm --filter @degenerate-gpt/db db:seed",
     "db:report": "pnpm --filter @degenerate-gpt/db db:report"

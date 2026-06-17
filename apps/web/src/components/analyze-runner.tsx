@@ -15,16 +15,32 @@ import { Button } from "@/components/ui/button";
  */
 export function AnalyzeRunner({
   matchId,
-  hasPrediction,
+  hasRuns,
+  atCap = false,
+  isRunning = false,
+  activeRunId = null,
+  accessToken = null,
 }: {
   matchId: string;
-  hasPrediction: boolean;
+  /** Whether any analysis runs already exist (controls the button label). */
+  hasRuns: boolean;
+  /** True once the user has used all their free predictions. */
+  atCap?: boolean;
+  /** Server-known: an analysis for this match is currently in flight. */
+  isRunning?: boolean;
+  /** Run id + token to re-subscribe to that in-flight run, from the server. */
+  activeRunId?: string | null;
+  accessToken?: string | null;
 }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  // Seed from the server's running state so the live DAG resumes on load.
   const [active, setActive] = useState<{ runId: string; accessToken: string } | null>(
-    null,
+    isRunning && activeRunId && accessToken
+      ? { runId: activeRunId, accessToken }
+      : null,
   );
+  const [capError, setCapError] = useState<string | null>(null);
 
   const { run, error } = useRealtimeRun(active?.runId, {
     accessToken: active?.accessToken,
@@ -39,9 +55,14 @@ export function AnalyzeRunner({
   });
 
   function onClick() {
+    setCapError(null);
     startTransition(async () => {
-      const { runId, accessToken } = await analyzeMatchAction(matchId);
-      setActive({ runId, accessToken });
+      const result = await analyzeMatchAction(matchId);
+      if (result.ok) {
+        setActive({ runId: result.runId, accessToken: result.accessToken });
+      } else {
+        setCapError(result.error);
+      }
     });
   }
 
@@ -53,8 +74,8 @@ export function AnalyzeRunner({
       <div className="flex justify-end">
         <Button
           onClick={onClick}
-          disabled={running}
-          variant={hasPrediction ? "outline" : "default"}
+          disabled={running || atCap}
+          variant={hasRuns ? "outline" : "default"}
         >
           {running ? (
             <>
@@ -65,14 +86,18 @@ export function AnalyzeRunner({
             </>
           ) : (
             <>
-              <span aria-hidden>{hasPrediction ? "🔁" : "▶️"}</span>
-              {hasPrediction ? "Re-run analysis" : "Analyze match"}
+              <span aria-hidden>{hasRuns ? "🔁" : "▶️"}</span>
+              {hasRuns ? "Re-run analysis" : "Analyze match"}
             </>
           )}
         </Button>
       </div>
 
       {running && <AnalysisFlow steps={steps} hasRun={Boolean(run)} />}
+
+      {capError && (
+        <p className="text-sm font-bold text-destructive">🚫 {capError}</p>
+      )}
 
       {error && (
         <p className="text-sm font-bold text-destructive">

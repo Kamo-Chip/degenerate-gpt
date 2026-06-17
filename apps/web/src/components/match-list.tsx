@@ -1,6 +1,7 @@
 import type { MatchListItem } from "@degenerate-gpt/db";
 import Link from "next/link";
 
+import { LocalTime } from "@/components/local-time";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -11,20 +12,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-function formatKickoff(date: Date | null): string {
-  if (!date) return "TBD";
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: "UTC",
-  }).format(date);
-}
-
 function predictionBadge(status: string) {
   if (status === "complete") {
     return <Badge variant="success">✅ analyzed</Badge>;
+  }
+  if (status === "running") {
+    return <Badge variant="secondary">⏳ analyzing</Badge>;
   }
   return <Badge variant="secondary">⚪ not analyzed</Badge>;
 }
@@ -33,8 +26,7 @@ export function MatchList({ matches }: { matches: MatchListItem[] }) {
   if (matches.length === 0) {
     return (
       <div className="rounded-xl border border-dashed p-10 text-center text-sm text-muted-foreground">
-        No matches yet. Hit <span className="font-medium">Discover matches</span>{" "}
-        to pull in World Cup fixtures.
+        No matches yet — fixtures sync automatically each day. Check back soon. ⚽
       </div>
     );
   }
@@ -44,7 +36,7 @@ export function MatchList({ matches }: { matches: MatchListItem[] }) {
       <TableHeader>
         <TableRow>
           <TableHead>Match</TableHead>
-          <TableHead>Kickoff (UTC)</TableHead>
+          <TableHead>Kickoff</TableHead>
           <TableHead>Prediction</TableHead>
         </TableRow>
       </TableHeader>
@@ -60,7 +52,16 @@ export function MatchList({ matches }: { matches: MatchListItem[] }) {
               </Link>
             </TableCell>
             <TableCell className="text-muted-foreground">
-              {formatKickoff(match.kickoffTime)}
+              <LocalTime
+                date={match.kickoffTime}
+                fallback="TBD"
+                options={{
+                  day: "numeric",
+                  month: "short",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }}
+              />
             </TableCell>
             <TableCell>{predictionBadge(match.predictionStatus)}</TableCell>
           </TableRow>

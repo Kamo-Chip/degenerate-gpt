@@ -43,14 +43,10 @@ export type Verdict = z.infer<typeof VerdictSchema>;
 /** Trigger.dev task payloads. */
 export const AnalyzeMatchPayloadSchema = z.object({
   matchId: z.uuid(),
+  /** Better Auth user id that owns this analysis (its reports/prediction). */
+  userId: z.string(),
 });
 export type AnalyzeMatchPayload = z.infer<typeof AnalyzeMatchPayloadSchema>;
-
-/** Discovery task payload — defaults to the World Cup competition. */
-export const DiscoverMatchesPayloadSchema = z.object({
-  competition: z.string().default("WC"),
-});
-export type DiscoverMatchesPayload = z.infer<typeof DiscoverMatchesPayloadSchema>;
 
 export const AgentPayloadSchema = z.object({
   matchId: z.uuid(),

@@ -6,9 +6,28 @@ import { UserMenu } from "@/components/user-menu";
 import { getUser } from "@/lib/session";
 import "./globals.css";
 
+const siteUrl = process.env.BETTER_AUTH_URL ?? "http://localhost:3000";
+const description = "Three bots read the game. One bot makes the call.";
+
 export const metadata: Metadata = {
-  title: "degenerate-gpt",
-  description: "Three bots read the game. One bot makes the call.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Degenerate·GPT",
+    template: "%s · Degenerate·GPT",
+  },
+  description,
+  openGraph: {
+    title: "Degenerate·GPT",
+    description,
+    siteName: "Degenerate·GPT",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Degenerate·GPT",
+    description,
+  },
 };
 
 export default async function RootLayout({

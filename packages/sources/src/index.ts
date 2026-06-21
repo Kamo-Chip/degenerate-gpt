@@ -9,4 +9,4 @@ export * as polymarket from "./polymarket.js";
 export type { PolymarketMarket, MarketOutcome } from "./polymarket.js";
 
 export * as tavily from "./tavily.js";
-export type { SearchResult } from "./tavily.js";
+export type { SearchResult, ResearchResult } from "./tavily.js";

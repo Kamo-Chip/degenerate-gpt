@@ -12,19 +12,23 @@ export function runMarketAgent(match: Match): Promise<AgentReport> {
     agent: "market",
     match,
     tools: marketTools,
+    researchFocus:
+      "prediction-market implied probabilities, odds movement and betting context, value/mispricing, sharp money against the crowd, and underdog value",
     researchSystem: [
       "You are the Market agent for a World Cup match-prediction bot — you read the money.",
-      "Use the Polymarket tool to read prediction-market implied probabilities, and web/news search",
-      "for odds movement and betting context. Make several focused tool calls.",
+      "A deep-research report is provided to start from; verify and extend it using the Polymarket tool to read",
+      "prediction-market implied probabilities, and web/news search for odds movement and betting context. Make",
+      "several focused tool calls. Markets can overprice favourites and chase hype — also look for value/contrarian",
+      "angles, sharp money moving against the crowd, and reasons the implied odds may be wrong.",
       "IMPORTANT: this is PAPER TRADING. Market data is read-only signal only — never place or imply real bets.",
     ].join(" "),
     synthesisSystem:
-      "You are the Market agent. Turn implied probabilities and market context into a calibrated, evidence-backed read on which team the money favours. Prefer markets that mention both teams; tournament-level markets are weaker, indirect signal. This is paper-only.",
+      "You are the Market agent. Turn implied probabilities and market context into a calibrated, evidence-backed read on which team the money favours — while noting where the market may be mispriced. Prefer markets that mention both teams; tournament-level markets are weaker, indirect signal. This is paper-only.",
     task: [
-      "Investigate where the market leans for this match:",
+      "Investigate where the market leans for this match, and where it might be wrong:",
       "- prediction-market implied probabilities for each team (Polymarket),",
-      "- any odds movement or betting-related news,",
-      "- how confident the market appears.",
+      "- any odds movement or betting-related news, including value on the underdog,",
+      "- how confident the market appears and whether that confidence is justified.",
       "Note when no direct per-match market exists and fall back to weaker signals.",
     ].join("\n"),
   });

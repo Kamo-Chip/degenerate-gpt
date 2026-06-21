@@ -45,7 +45,7 @@ apps/
 1. `pnpm install`
 2. `cp .env.example .env` and fill in:
    - `DATABASE_URL` — Neon Postgres connection string
-   - `OPENAI_API_KEY` — Decider + Social/Market research (optional `OPENAI_MODEL`, default `gpt-4o-mini`)
+   - `OPENAI_API_KEY` — Decider + Social/Market research (optional `OPENAI_MODEL`, default `gpt-5.5-2026-04-23`)
    - `FOOTBALL_DATA_API_KEY` — free key from football-data.org (Stats + discovery)
    - `TAVILY_API_KEY` — web + news search for the Social/Market research agents
    - `TRIGGER_SECRET_KEY` — needed by `apps/web` to trigger runs (and to deploy `apps/jobs`)
